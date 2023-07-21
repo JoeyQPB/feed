@@ -46,11 +46,13 @@ public class Post {
         return this.likes;
     }
 
-    public void addLikes(Integer likes) {
+    public void addLikes() {
         this.likes++;
     }
-    public void removeLikes(Integer likes) {
-        this.likes--;
+    public void removeLikes() {
+        if (this.likes > 0) {
+            this.likes--;
+        }
     }
 
     public void addComment (Comment comment) {

@@ -3,6 +3,7 @@ package entities;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Feed {
     private static SimpleDateFormat sdft = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -55,10 +56,74 @@ public class Feed {
         }
     }
 
-    // get one post by id
-    // edit a post by id
-    // remove post by id
-    // add like
-    // remove like
+    public void showOnePost (int id) {
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("\nPOST #" + post.getId()  + "\n");
+                sb.append("Tittle: " + post.getTitle().toUpperCase() + "\n");
+                sb.append("by: " + post.getAuthor() + "\n");
+                sb.append("Posted at: " + this.sdft.format(post.getMoment()) + "\n");
+                if (post.getMoment().getTime() != post.getUpdateMoment().getTime()) {
+                    sb.append("updated at: " + this.sdft.format(post.getMoment()) + "\n");
+                }
+                sb.append("CONTENT: " + post.getContent() + "\n");
+                sb.append("Likes: " + post.getLikes() + "\n");
+                System.out.println(sb.toString());
+            }
+        }
+    }
 
+    public void editOnePost (int id) {
+        Scanner sc = new Scanner(System.in);
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                System.out.println("\nCurrent Content: " + post.getContent());
+
+                System.out.println("\n Enter new content: ");
+                String newContent = sc.nextLine();
+
+                post.editContent(newContent);
+            }
+        }
+    }
+
+    public void removePost (int id) {
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                this.posts.remove(post);
+            }
+        }
+    }
+
+    public void addLike(int id) {
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                post.addLikes();
+            }
+        }
+    }
+    public void removeLike(int id) {
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                post.removeLikes();
+            }
+        }
+    }
+
+    public Integer getQtdPost () {
+        return this.posts.size();
+    }
+
+    public Post getPost (int id) {
+        boolean notFound = true;
+        for ( Post post : this.posts ) {
+            if(post.getId() == id) {
+                notFound = false;
+                return post;
+            }
+        }
+        if(notFound) System.out.println("Post Not found!");
+        return null;
+    }
 }
