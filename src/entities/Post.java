@@ -87,7 +87,7 @@ public class Post {
             if (comment.getId() == id) {
                 System.out.println("\nCurrent Content: " + comment.getContent());
 
-                System.out.println("\n Enter new content: ");
+                System.out.println("Enter new content: ");
                 String newContent = sc.nextLine();
 
                 comment.editContent(newContent);
@@ -120,9 +120,9 @@ public class Post {
 
     public void showComments() {
         for (Comment comment : this.comments) {
-            System.out.printf("\t\t\nCOMMENT #%d", comment.getId());
+            System.out.printf("\t\tCOMMENT #%d%n", comment.getId());
             System.out.println("\t\tcomment at: " + sdft.format(comment.getMoment()));
-            if(comment.getMoment() != comment.getUpdateMoment()) {
+            if(comment.getMoment().getTime() != comment.getUpdateMoment().getTime()) {
                 System.out.println("\t\tupdated at: " + sdft.format(comment.getUpdateMoment()));
             }
             System.out.println("\t\tAuthor: " + comment.getAuthor());

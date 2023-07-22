@@ -13,12 +13,14 @@ public class Actions {
     public Actions() {
         System.out.print("Enter the text social media: ");
         createFeed(sc.nextLine());
-        this.feed.showFeed();
     }
     private void createFeed(String name) {
         this.feed = new Feed(name);
     }
-
+    public void show() {
+        System.out.println("\t\t " + feed.getFeedName().toUpperCase());
+        this.feed.showFeed();
+    }
     public void doSomething() {
         StringBuilder sb = new StringBuilder();
 
@@ -31,7 +33,7 @@ public class Actions {
             sb.append("1 - New post\n");
             sb.append("2 - Edit title post\n");
             sb.append("3 - Edit post\n");
-            sb.append("4 - Like  post\n");
+            sb.append("4 - Like post\n");
             sb.append("5 - Remove like\n");
             sb.append("6 - Remove post\n");
             sb.append("7 - Comment a post\n");

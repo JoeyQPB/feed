@@ -53,7 +53,7 @@ public class Feed {
                 sb.append("updated at: ").append(SDFT.format(post.getMoment())).append("\n");
             }
             sb.append("CONTENT: ").append(post.getContent()).append("\n");
-            sb.append("Likes: ").append(post.getLikes()).append("\n");
+            sb.append("Likes: ").append(post.getLikes());
             System.out.println(sb);
             post.showComments();
         }
@@ -83,7 +83,7 @@ public class Feed {
             if (post.getId() == id) {
                 System.out.println("\nCurrent Title: " + post.getTitle());
 
-                System.out.println("\n Enter new Title: ");
+                System.out.print("Enter new Title: ");
                 String newTitle = sc.nextLine();
 
                 post.editTitle(newTitle);
@@ -98,7 +98,7 @@ public class Feed {
             if (post.getId() == id) {
                 System.out.println("\nCurrent Content: " + post.getContent());
 
-                System.out.println("\n Enter new content: ");
+                System.out.print("Enter new content: ");
                 String newContent = sc.nextLine();
 
                 post.editContent(newContent);
