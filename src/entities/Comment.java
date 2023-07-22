@@ -5,7 +5,7 @@ import java.util.Date;
 public class Comment {
     private final Date moment = new Date();
     private Date updateMoment = new Date();
-    private String author;
+    private final String author;
     private String content;
     private Integer likes = 0;
     private Integer id;

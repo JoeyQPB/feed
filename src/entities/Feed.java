@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Feed {
-    private static SimpleDateFormat sdft = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    private List<Post> posts = new ArrayList<Post>();
-    private String name;
+    private static final SimpleDateFormat SDFT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private final List<Post> posts = new ArrayList<>();
+    private final String name;
     public Feed (String name) {
         this.name = name;
     }
@@ -17,6 +17,9 @@ public class Feed {
         sortPost();
     }
 
+    public String getFeedName () {
+        return this.name;
+    }
     private void sortPost () {
         int minor_date;
         int postsSize = this.posts.size();
@@ -42,16 +45,16 @@ public class Feed {
     public void showFeed() {
         StringBuilder sb = new StringBuilder();
         for (Post post : this.posts) {
-            sb.append("\nPOST #" + post.getId()  + "\n");
-            sb.append("Tittle: " + post.getTitle().toUpperCase() + "\n");
-            sb.append("by: " + post.getAuthor() + "\n");
-            sb.append("Posted at: " + this.sdft.format(post.getMoment()) + "\n");
+            sb.append("\nPOST #").append(post.getId()) .append("\n");
+            sb.append("Tittle: ").append(post.getTitle().toUpperCase()).append("\n");
+            sb.append("by: ").append(post.getAuthor()).append("\n");
+            sb.append("Posted at: ").append(SDFT.format(post.getMoment())).append("\n");
             if (post.getMoment().getTime() != post.getUpdateMoment().getTime()) {
-                sb.append("updated at: " + this.sdft.format(post.getMoment()) + "\n");
+                sb.append("updated at: ").append(SDFT.format(post.getMoment())).append("\n");
             }
-            sb.append("CONTENT: " + post.getContent() + "\n");
-            sb.append("Likes: " + post.getLikes() + "\n");
-            System.out.println(sb.toString());
+            sb.append("CONTENT: ").append(post.getContent()).append("\n");
+            sb.append("Likes: ").append(post.getLikes()).append("\n");
+            System.out.println(sb);
             post.showComments();
         }
     }
@@ -60,16 +63,31 @@ public class Feed {
         for (Post post : this.posts) {
             if (post.getId() == id) {
                 StringBuilder sb = new StringBuilder();
-                sb.append("\nPOST #" + post.getId()  + "\n");
-                sb.append("Tittle: " + post.getTitle().toUpperCase() + "\n");
-                sb.append("by: " + post.getAuthor() + "\n");
-                sb.append("Posted at: " + this.sdft.format(post.getMoment()) + "\n");
+                sb.append("\nPOST #").append(post.getId()).append("\n");
+                sb.append("Tittle: ").append(post.getTitle().toUpperCase()).append("\n");
+                sb.append("by: ").append(post.getAuthor()).append("\n");
+                sb.append("Posted at: ").append(SDFT.format(post.getMoment())).append("\n");
                 if (post.getMoment().getTime() != post.getUpdateMoment().getTime()) {
-                    sb.append("updated at: " + this.sdft.format(post.getMoment()) + "\n");
+                    sb.append("updated at: ").append(SDFT.format(post.getMoment())).append("\n");
                 }
-                sb.append("CONTENT: " + post.getContent() + "\n");
-                sb.append("Likes: " + post.getLikes() + "\n");
-                System.out.println(sb.toString());
+                sb.append("CONTENT: ").append(post.getContent()).append("\n");
+                sb.append("Likes: ").append(post.getLikes()).append("\n");
+                System.out.println(sb);
+            }
+        }
+    }
+
+    public void editOneTitlePost (int id) {
+        Scanner sc = new Scanner(System.in);
+        for (Post post : this.posts) {
+            if (post.getId() == id) {
+                System.out.println("\nCurrent Title: " + post.getTitle());
+
+                System.out.println("\n Enter new Title: ");
+                String newTitle = sc.nextLine();
+
+                post.editTitle(newTitle);
+                post.setUpdateMoment();
             }
         }
     }
@@ -84,26 +102,23 @@ public class Feed {
                 String newContent = sc.nextLine();
 
                 post.editContent(newContent);
+                post.setUpdateMoment();
             }
         }
     }
 
     public void removePost (int id) {
-        for (Post post : this.posts) {
-            if (post.getId() == id) {
-                this.posts.remove(post);
-            }
-        }
+        this.posts.removeIf(post -> post.getId() == id);
     }
 
-    public void addLike(int id) {
+    public void addPostLike(int id) {
         for (Post post : this.posts) {
             if (post.getId() == id) {
                 post.addLikes();
             }
         }
     }
-    public void removeLike(int id) {
+    public void removePostLike(int id) {
         for (Post post : this.posts) {
             if (post.getId() == id) {
                 post.removeLikes();

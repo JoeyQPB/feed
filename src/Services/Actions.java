@@ -7,7 +7,7 @@ import entities.Post;
 import java.util.Scanner;
 
 public class Actions {
-    private static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
     private Feed feed;
 
     public Actions() {
@@ -29,29 +29,33 @@ public class Actions {
         } else {
             sb.append("\nSelect the Action: \n");
             sb.append("1 - New post\n");
-            sb.append("2 - Edit post\n");
-            sb.append("3 - Like  post\n");
-            sb.append("4 - Remove like\n");
-            sb.append("5 - Remove post\n");
-            sb.append("6 - Comment a post\n");
-            sb.append("7 - Edit comment\n");
-            sb.append("8 - like comment\n");
-            sb.append("9 - Remove like comment\n");
-            sb.append("10 - Remove comment\n");
+            sb.append("2 - Edit title post\n");
+            sb.append("3 - Edit post\n");
+            sb.append("4 - Like  post\n");
+            sb.append("5 - Remove like\n");
+            sb.append("6 - Remove post\n");
+            sb.append("7 - Comment a post\n");
+            sb.append("8 - Edit comment\n");
+            sb.append("9 - like comment\n");
+            sb.append("10 - Remove like comment\n");
+            sb.append("11 - Remove comment\n");
+            sb.append("12 - Show quantity of posts\n");
 
-            System.out.println(sb.toString());
-            ;
+            System.out.println(sb);
+
             switch (Integer.parseInt(sc.nextLine())) {
                 case 1 -> newPost();
-                case 2 -> editPost();
-                case 3 -> likePost();
-                case 4 -> removeLikePost();
-                case 5 -> removePost();
-                case 6 -> commentPost();
-                case 7 -> editComment();
-                case 8 -> likeComment();
-                case 9 -> removeLikeComment();
-                case 10 -> removeComment();
+                case 2 -> editTitlePost();
+                case 3 -> editPost();
+                case 4 -> likePost();
+                case 5 -> removeLikePost();
+                case 6 -> removePost();
+                case 7 -> commentPost();
+                case 8 -> editComment();
+                case 9 -> likeComment();
+                case 10 -> removeLikeComment();
+                case 11 -> removeComment();
+                case 12 -> qdtPosts();
 
                 default -> System.out.println("Invalid Option!");
             }
@@ -71,6 +75,13 @@ public class Actions {
         this.feed.addPost(post);
     }
 
+    private void editTitlePost() {
+        System.out.print("Enter the post ID: ");
+        int id = Integer.parseInt(sc.nextLine());
+        this.feed.editOneTitlePost(id);
+        this.feed.showOnePost(id);
+    }
+
     private void editPost() {
         System.out.print("Enter the post ID: ");
         int id = Integer.parseInt(sc.nextLine());
@@ -80,12 +91,12 @@ public class Actions {
     private void likePost() {
         System.out.print("Enter the post ID: ");
         int id = Integer.parseInt(sc.nextLine());
-        this.feed.addLike(id);
+        this.feed.addPostLike(id);
     }
     private void removeLikePost() {
         System.out.print("Enter the post ID: ");
         int id = Integer.parseInt(sc.nextLine());
-        this.feed.removeLike(id);
+        this.feed.removePostLike(id);
     }
     private void removePost() {
         System.out.print("Enter the post ID: ");
@@ -104,9 +115,43 @@ public class Actions {
         Comment newComment = new Comment(author, content);
         this.feed.getPost(id).addComment(newComment);
     }
-    private void editComment() {}
-    private void likeComment() {}
-    private void removeLikeComment() {}
-    private void removeComment() {}
+    private void editComment() {
+        System.out.print("Enter the post ID: ");
+        int postID = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter the Comment ID: ");
+        int commentID = Integer.parseInt(sc.nextLine());
+        this.feed.getPost(postID).editOneComment(commentID);
+    }
+    private void likeComment() {
+        System.out.print("Enter the post ID: ");
+        int postID = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter the Comment ID: ");
+        int commentID = Integer.parseInt(sc.nextLine());
+        this.feed.getPost(postID).editOneComment(commentID);
+    }
+    private void removeLikeComment() {
+        System.out.print("Enter the post ID: ");
+        int postID = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter the Comment ID: ");
+        int commentID = Integer.parseInt(sc.nextLine());
+
+        this.feed.getPost(postID).addCommentLike(commentID);
+    }
+    private void removeComment() {
+        System.out.print("Enter the post ID: ");
+        int postID = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter the Comment ID: ");
+        int commentID = Integer.parseInt(sc.nextLine());
+
+        this.feed.getPost(postID).removeCommentLike(commentID);
+    }
+
+    public void qdtPosts () {
+        System.out.println("Posts quantity: " + this.feed.getQtdPost());
+    }
 
 }
